@@ -71,6 +71,31 @@ fun MusicGenerationScreen(viewModel: MusicViewModel) {
 
                 Spacer(modifier = Modifier.height(32.dp))
 
+                // Discovery Section
+                Text(
+                    "DISCOVER STYLES",
+                    style = Typography.labelMedium.copy(color = AuraGray, letterSpacing = 1.sp)
+                )
+                
+                Spacer(modifier = Modifier.height(12.dp))
+                
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 4.dp),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    viewModel.discoveryStyles.take(3).forEach { (style, description) ->
+                        StyleCard(
+                            title = style,
+                            modifier = Modifier.weight(1f),
+                            onClick = { onPromptChange(description) }
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(32.dp))
+
                 // Dynamic Visualizer (Visible during generation)
                 AnimatedVisibility(
                     visible = generationState is GenerationState.Loading,
@@ -232,6 +257,29 @@ fun GenerationInputSection(
                 Text("Generate Magic", style = Typography.labelMedium.copy(fontWeight = FontWeight.Bold))
             }
         }
+    }
+}
+
+@Composable
+fun StyleCard(title: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
+    Box(
+        modifier = modifier
+            .height(100.dp)
+            .clip(RoundedCornerShape(16.dp))
+            .background(
+                Brush.linearGradient(
+                    listOf(AuraPurple.copy(alpha = 0.2f), AuraCyan.copy(alpha = 0.1f))
+                )
+            )
+            .border(0.5.dp, AuraWhite.copy(alpha = 0.05f), RoundedCornerShape(16.dp))
+            .clickable { onClick() }
+            .padding(12.dp)
+    ) {
+        Text(
+            title,
+            style = Typography.bodyLarge.copy(fontWeight = FontWeight.Bold, fontSize = 14.sp),
+            modifier = Modifier.align(Alignment.BottomStart)
+        )
     }
 }
 
