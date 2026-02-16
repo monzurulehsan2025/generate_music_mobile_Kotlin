@@ -25,6 +25,14 @@ class MusicViewModel : ViewModel() {
     private val _recentTracks = MutableStateFlow<List<Track>>(emptyList())
     val recentTracks: StateFlow<List<Track>> = _recentTracks.asStateFlow()
 
+    val discoveryStyles = listOf(
+        "Lo-fi Chill" to "A relaxing, low-fidelity beat with dusty vinyl textures.",
+        "Synthwave" to "Retro-futuristic 80s aesthetics with lush neon synths.",
+        "Orchestral" to "Epic cinematic strings and powerful brass arrangements.",
+        "Cyberpunk" to "Aggressive industrial bass and glitchy digital sounds.",
+        "Acoustic" to "Clean guitar melodies and soft rhythmic percussion."
+    )
+
     fun generateMusic(prompt: String) {
         viewModelScope.launch {
             _generationState.value = GenerationState.Loading
