@@ -66,7 +66,8 @@ fun MusicGenerationScreen(viewModel: MusicViewModel) {
                     prompt = prompt,
                     onPromptChange = { prompt = it },
                     onGenerateRequested = { viewModel.generateMusic(prompt) },
-                    isLoading = generationState is GenerationState.Loading
+                    isLoading = generationState is GenerationState.Loading,
+                    onSurpriseMe = { prompt = viewModel.getRandomPrompt() }
                 )
 
                 Spacer(modifier = Modifier.height(32.dp))
@@ -172,7 +173,8 @@ fun GenerationInputSection(
     prompt: String,
     onPromptChange: (String) -> Unit,
     onGenerateRequested: () -> Unit,
-    isLoading: Boolean
+    isLoading: Boolean,
+    onSurpriseMe: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -186,12 +188,27 @@ fun GenerationInputSection(
             )
             .padding(24.dp)
     ) {
-        Text(
-            "What should the AI create?",
-            style = Typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
-        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                "What should the AI create?",
+                style = Typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
+            )
+            
+            TextButton(
+                onClick = onSurpriseMe,
+                colors = ButtonDefaults.textButtonColors(contentColor = AuraCyan)
+            ) {
+                Icon(Icons.Default.AutoAwesome, contentDescription = null, modifier = Modifier.size(16.dp))
+                Spacer(modifier = Modifier.width(4.dp))
+                Text("Surprise Me", style = Typography.labelMedium)
+            }
+        }
         
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
         TextField(
             value = prompt,

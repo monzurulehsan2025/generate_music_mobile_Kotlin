@@ -33,6 +33,17 @@ class MusicViewModel : ViewModel() {
         "Acoustic" to "Clean guitar melodies and soft rhythmic percussion."
     )
 
+    private val creativePrompts = listOf(
+        "A ethereal dream-pop track with shimmering synths and airy vocals.",
+        "Mid-tempo funk with a grooving bassline and rhythmic jazz organ.",
+        "Dark cinematic techno for a high-stakes car chase in a rain-soaked city.",
+        "Ambient forest soundscape with gentle piano and distant birds chirping.",
+        "Upbeat indie rock with crunchy guitars and a driving drum beat.",
+        "Neo-soul track with smooth rhodes piano and a laid-back hip-hop pocket."
+    )
+
+    fun getRandomPrompt(): String = creativePrompts.random()
+
     fun generateMusic(prompt: String) {
         viewModelScope.launch {
             _generationState.value = GenerationState.Loading
